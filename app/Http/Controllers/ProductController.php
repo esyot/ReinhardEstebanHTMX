@@ -20,7 +20,7 @@ class ProductController extends Controller
          foreach($products->get() as $prod) {
             $html .= "
         <div class='p-4 rounded bg-blue-200 flex items-center'>
-        
+
             <div class='w-6/4 pl-4'>
                 <h2 class='text-xl font-bold'>Name: {$prod->name}</h2>
                 <p>Description: {$prod->description}</p>
@@ -35,140 +35,191 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-    try{
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer',
-        ]);
-    
-    
-        $product = Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'price' => 'required|numeric',
+                'quantity' => 'required|integer',
+            ]);
 
-        $products = Product::orderBy('id');
+            $product = Product::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+            ]);
 
-      
+            $products = Product::orderBy('id');
 
-         $html = "";
+            $html = "";
 
-         foreach($products->get() as $prod) {
-            $html .= "
-        <div class='p-4 rounded bg-blue-200 flex items-center'>
-        
-            <div class='w-3/45 pl-4'>
-                <h2 class='text-xl font-bold'>Name: {$prod->name}</h2>
-                <p>Description: {$prod->description}</p>
-                <p class='text-green-500 font-semibold'>Price: ₱{$prod->price}</p>
-                <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
-            </div>
-        </div>       
-     
-    ";
-         }
-         if($product){
-            return $html . "<div hx-swap-oob='true' id='message' class='bg-green-200 text-center m-2 rounded'>
-            Product Successfully Added! </div>";
+            foreach ($products->get() as $prod) {
+                $html .= "
+                    <div class='p-4 rounded bg-blue-200 flex items-center'>
+                        <div class='w-3/45 pl-4'>
+                            <h2 class='text-xl font-bold'>Name: {$prod->name}</h2>
+                            <p>Description: {$prod->description}</p>
+                            <p class='text-green-500 font-semibold'>Price: ₱{$prod->price}</p>
+                            <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
+                        </div>
+                    </div>
+                ";
+            }
+                 if ($product) {
+                return $html . "
+                <div hx-swap-oob='true' id='name_message'></div>
+                <div hx-swap-oob='true' id='description_message'></div>
+                <div hx-swap-oob='true' id='price_message'></div>
+                <div hx-swap-oob='true' id='quantity_message'></div>
+                <div hx-swap-oob='true' id='message' class='bg-green-200 text-center m-2 rounded'>Product Successfully Added! </div>";
+            }
 
-        } }catch (\Exception $e) {
+
+        } catch (\Exception $e) {
+            $products = Product::orderBy('id');
+
+            $html = "";
+
+            foreach ($products->get() as $prod) {
+                $html .= "
+                    <div class='p-4 rounded bg-blue-200 flex items-center'>
+                        <div class='w-3/45 pl-4'>
+                            <h2 class='text-xl font-bold'>Name: {$prod->name}</h2>
+                            <p>Description: {$prod->description}</p>
+                            <p class='text-green-500 font-semibold'>Price: ₱{$prod->price}</p>
+                            <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
+                        </div>
+                    </div>
+                ";
+            }
+
+            $errorMessages = [
+                'name' => '',
+                'description' => '',
+                'price' => '',
+                'quantity' => '',
+            ];
+
             if ($e instanceof \Illuminate\Validation\ValidationException) {
                 $errors = $e->validator->errors();
-        
-                // Prepare error messages for each field
-                $errorDetails = [];
-        
-                $errorMessageHTML = ''; // Initialize the error message HTML
-        
+
                 if ($errors->has('name')) {
-                    $errorDetails['name'] = $errors->first('name');
-                    $errorMessageHTML .= '<div hx-swap-oob="true" id="name_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['name'] . '</div>';
+                    $errorMessages['name'] = '<div hx-swap-oob="true" id="name_message" class="bg-red-200 text-center m-2 rounded">' . $errors->first('name') . '</div>';
+                }else{
+
+                    $errorMessages['name'] = '<div hx-swap-oob="true" id="name_message" class="bg-red-200 text-center m-2 rounded"></div>';
+
                 }
-        
+
                 if ($errors->has('description')) {
-                    $errorDetails['description'] = $errors->first('description');
-                    $errorMessageHTML .= '<div hx-swap-oob="true" id="description_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['description'] . '</div>';
+                    $errorMessages['description'] = '<div hx-swap-oob="true" id="description_message" class="bg-red-200 text-center m-2 rounded">' . $errors->first('description') . '</div>';
+                }else{
+
+                    $errorMessages['description'] = '<div hx-swap-oob="true" id="description_message" class="bg-red-200 text-center m-2 rounded"></div>';
+
                 }
-        
+
                 if ($errors->has('price')) {
-                    $errorDetails['price'] = $errors->first('price');
-                    $errorMessageHTML .= '<div hx-swap-oob="true" id="price_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['price'] . '</div>';
+                    $errorMessages['price'] = '<div hx-swap-oob="true" id="price_message" class="bg-red-200 text-center m-2 rounded">' . $errors->first('price') . '</div>';
+                }else{
+
+                    $errorMessages['price'] = '<div hx-swap-oob="true" id="price_message" class="bg-red-200 text-center m-2 rounded"></div>';
+
                 }
-        
+
                 if ($errors->has('quantity')) {
-                    $errorDetails['quantity'] = $errors->first('quantity');
-                    $errorMessageHTML .= '<div hx-swap-oob="true" id="quantity_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['quantity'] . '</div>';
+                    $errorMessages['quantity'] = '<div hx-swap-oob="true" id="quantity_message" class="bg-red-200 text-center m-2 rounded">' . $errors->first('quantity') . '</div>';
+                }else{
+
+                    $errorMessages['quantity'] = '<div hx-swap-oob="true" id="quantity_message" class="bg-red-200 text-center m-2 rounded"></div>';
+
                 }
-        
-                return $errorMessageHTML; 
-            } elseif ($e instanceof \Exception) {
-                
-                return "<div hx-swap-oob='true' id='general-error-message' class='bg-red-200 text-center m-2 rounded'>" . $e->getMessage() . "</div>";
+
+
             }
+
+
+
+            elseif ($e instanceof \Exception) {
+                return "
+                <div hx-swap-oob='true' id='general-error-message' class='bg-red-200 text-center m-2 rounded'>" . $e->getMessage() . "</div>";
+            }
+
+
+            $errorMessageHTML = '';
+            foreach ($errorMessages as $errorMessage) {
+                $errorMessageHTML .= $errorMessage;
+            }
+
+            return $html . $errorMessageHTML;
         }
     }
-        
-            
+
+
     public function open() {
         $html = '';
-    
+
         $html .= '<div class="modal-header flex justify-between items-center border-b pb-2">
             <h4 class="text-lg">Create Product</h4>
         </div>
         <div class="modal-body my-4">
             <form id="modalForm" hx-post="api/create-product" hx-target="#products-list" hx-swap="innerHTML">
-       
+
             <div class="form-group mb-4">
                     <label for="name" class="block mb-2">Name:</label>
-                    <input type="text" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product name" name="name"> 
+                    <input type="text" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product name" name="name">
                 </div>
+
                 <div id="name_message">
                 </div>
+
                 <div class="form-group mb-4">
                     <label for="description" class="block mb-2">Description:</label>
                     <input type="text" id="description" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product description" name="description">
                 </div>
+
                 <div id="description_message">
                 </div>
+
                 <div class="form-group mb-4">
                     <label for="price" class="block mb-2">Price:</label>
                     <input type="text" id="price" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product price" name="price">
                 </div>
+
                 <div id="price_message">
                 </div>
+
                 <div class="form-group mb-4">
                     <label for="quantity" class="block mb-2">Quantity:</label>
                     <input type="text" id="quantity" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product quantity" name="quantity">
                 </div>
+
                 <div id="quantity_message">
                 </div>
-
-                <div id="message" class="bg-green-200">
-
+                <div id="message">
                 </div>
+
+
 
                 <div class="flex justify-between items-center">
 
                     <button type="submit" id="modalSubmitButton" class="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Submit</button>
-              
+
                 </form>
 
                 </div>
-                
+
                 <div class="float-right my-0">
 
                 <button id="modalSubmitButton" onclick="closeModal()" class="btn bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">Close</button>
                </div>
         </div>';
-    
+
         return $html;
     }
-    
-    
+
+
 
 public function close() {
     $html = '';
@@ -190,5 +241,5 @@ public function error(){
     ';
     return $html;
     }
-    
+
 }
