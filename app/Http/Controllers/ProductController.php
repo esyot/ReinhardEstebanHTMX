@@ -35,7 +35,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-     
+    try{
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -67,29 +67,52 @@ class ProductController extends Controller
                 <p class='text-green-500 font-semibold'>Price: ₱{$prod->price}</p>
                 <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
             </div>
-        </div>
-
-        <div hx-swap-oob='true' id='success' class='bg-green-200 text-center m-2 rounded'>
-        Product Successfully Added!
-   
-        </div>
-       
+        </div>       
      
     ";
          }
-
          if($product){
+            return $html . "<div hx-swap-oob='true' id='message' class='bg-green-200 text-center m-2 rounded'>
+            Product Successfully Added! </div>";
 
-            return $html . " <div hx-get='/message' hx-target='#message' hx-trigger='load'></div>";
-
-         }else{
-
-            return $html . " <div hx-get='/error' hx-target='#message' hx-trigger='load'></div>";
-
-         }
+        } }catch (\Exception $e) {
+            if ($e instanceof \Illuminate\Validation\ValidationException) {
+                $errors = $e->validator->errors();
         
+                // Prepare error messages for each field
+                $errorDetails = [];
+        
+                $errorMessageHTML = ''; // Initialize the error message HTML
+        
+                if ($errors->has('name')) {
+                    $errorDetails['name'] = $errors->first('name');
+                    $errorMessageHTML .= '<div hx-swap-oob="true" id="name_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['name'] . '</div>';
+                }
+        
+                if ($errors->has('description')) {
+                    $errorDetails['description'] = $errors->first('description');
+                    $errorMessageHTML .= '<div hx-swap-oob="true" id="description_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['description'] . '</div>';
+                }
+        
+                if ($errors->has('price')) {
+                    $errorDetails['price'] = $errors->first('price');
+                    $errorMessageHTML .= '<div hx-swap-oob="true" id="price_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['price'] . '</div>';
+                }
+        
+                if ($errors->has('quantity')) {
+                    $errorDetails['quantity'] = $errors->first('quantity');
+                    $errorMessageHTML .= '<div hx-swap-oob="true" id="quantity_message" class="bg-red-200 text-center m-2 rounded">' . $errorDetails['quantity'] . '</div>';
+                }
+        
+                return $errorMessageHTML; 
+            } elseif ($e instanceof \Exception) {
+                
+                return "<div hx-swap-oob='true' id='general-error-message' class='bg-red-200 text-center m-2 rounded'>" . $e->getMessage() . "</div>";
+            }
+        }
     }
-
+        
+            
     public function open() {
         $html = '';
     
@@ -101,22 +124,30 @@ class ProductController extends Controller
        
             <div class="form-group mb-4">
                     <label for="name" class="block mb-2">Name:</label>
-                    <input type="text" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product name" name="name" required> 
+                    <input type="text" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product name" name="name"> 
+                </div>
+                <div id="name_message">
                 </div>
                 <div class="form-group mb-4">
                     <label for="description" class="block mb-2">Description:</label>
-                    <input type="text" id="description" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product description" name="description" required>
+                    <input type="text" id="description" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product description" name="description">
+                </div>
+                <div id="description_message">
                 </div>
                 <div class="form-group mb-4">
                     <label for="price" class="block mb-2">Price:</label>
-                    <input type="number" id="price" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product price" name="price" required>
+                    <input type="text" id="price" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product price" name="price">
+                </div>
+                <div id="price_message">
                 </div>
                 <div class="form-group mb-4">
                     <label for="quantity" class="block mb-2">Quantity:</label>
-                    <input type="number" id="quantity" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product quantity" name="quantity" required>
+                    <input type="text" id="quantity" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter product quantity" name="quantity">
+                </div>
+                <div id="quantity_message">
                 </div>
 
-                <div id="success" class="bg-green-200">
+                <div id="message" class="bg-green-200">
 
                 </div>
 
@@ -144,19 +175,6 @@ public function close() {
 
     $html .= '<button type="button" id="modalSubmitButton" onclick="closeModal()" class="btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300">Close</button>';
 
-    return $html;
-}
-
-public function message(){
-
-    $html = '';
-
-    $html .= '
-     <div hx-swap-oob="true" id="success" class="bg-green-200 text-center m-2 rounded">
-     Product Successfully Added!
-
-     </div>
-    ';
     return $html;
 }
 

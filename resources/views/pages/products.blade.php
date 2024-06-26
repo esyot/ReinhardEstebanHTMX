@@ -54,9 +54,18 @@ function closeModal() {
         input.value = '';
     });
     
-    var message = document.getElementById('success');
+    var message = document.getElementById('message');
+    var name_message = document.getElementById('name_message');
+    var description_message = document.getElementById('description_message');
+    var price_message = document.getElementById('price_message');
+    var quantity_message = document.getElementById('quantity_message');
     if (message) {
         message.style.display = 'none';
+        name_message.style.display = 'none';
+        description_message.style.display = 'none';
+        price_message.style.display = 'none';
+        quantity_message.style.display = 'none';
+    
     }
 
 }
