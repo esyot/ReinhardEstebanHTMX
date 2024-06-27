@@ -33,3 +33,4 @@ Route::get('/message', [ProductController::class, 'message'])->name('message');
 
 Route::get('/error', [ProductController::class, 'error'])->name('error');
 
+Route::delete('/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
