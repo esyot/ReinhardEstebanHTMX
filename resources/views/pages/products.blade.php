@@ -37,16 +37,20 @@
     var modal = document.getElementById("myModal");
 
     modal.classList.remove("hidden");
+
+
+    const deleteButton = document.getElementById('deleteButton');
+
+    const confirmationModal = document.getElementById('confirmationModal');
+     
+        deleteButton.addEventListener('click', () => {
+            confirmationModal.classList.remove('hidden');
+        });
+
     });
 
 
 
-    document.getElementById("openModalWithId").addEventListener('click', function() {
-    
-    var modal = document.getElementById("myModal");
-    
-    modal.classList.remove("hidden");
-    });
 });
 
 function closeModal() {
@@ -74,6 +78,37 @@ function closeModal() {
 
     }
 
+    
+
 }
+
+function confirmDeleteModal() { 
+
+    const confirmationModal = document.getElementById('confirmationModal');
+    confirmationModal.classList.remove('hidden');
+    
+}
+
+function cancelDelete(){
+
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmationModal = document.getElementById('confirmationModal');
+    confirmationModal.classList.add('hidden');
+}
+function updateModal(){
+    const updateModal = document.getElementById('updateModal');
+    updateModal.classList.remove('hidden');
+
+}
+
+function closeUpdateModal(){
+    const updateModal = document.getElementById('updateModal');
+    updateModal.classList.add('hidden');
+
+}
+
 </script>
+
+
+
 @endsection
