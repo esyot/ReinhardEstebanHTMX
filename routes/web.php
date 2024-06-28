@@ -34,3 +34,10 @@ Route::get('/message', [ProductController::class, 'message'])->name('message');
 Route::get('/error', [ProductController::class, 'error'])->name('error');
 
 Route::delete('/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+
+Route::get('/product/{id}', [ProductController::class, 'product'])->name('product');
+
+Route::get('/products', [ProductController::class, 'products'])->name('products');
+
+Route::get('/update_view/{id}', [ProductController::class, 'update_view'])->name('inclusion.update_product');
+
