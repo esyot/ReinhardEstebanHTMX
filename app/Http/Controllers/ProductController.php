@@ -29,7 +29,7 @@ class ProductController extends Controller
                 <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
                 <div class='m-2'>
                 
-                <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'>Edit</button>
+                <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'> View & Edit</button>
         
                 <button hx-delete='api/delete/".$prod->id."' hx-trigger='click' hx-confirm='Are you sure to delete ".$prod->name."?' hx-target='#products-list' hx-swap='innerHTML' class='bg-red-500 text-white font-bold py-2 px-4 rounded'>
         Delete Item
@@ -83,7 +83,7 @@ class ProductController extends Controller
                     <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
                     <div class='m-2'>
                     
-                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'>Edit</button>
+                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'> View & Edit</button>
         
                     <button hx-delete='api/delete/".$prod->id."' hx-trigger='click' hx-confirm='Are you sure to delete ".$prod->name."?' hx-target='#products-list' hx-swap='innerHTML' class='bg-red-500 text-white font-bold py-2 px-4 rounded'>
                     Delete Item
@@ -91,10 +91,6 @@ class ProductController extends Controller
         </div>
                 </div>
                 </div>
-    
-    
-            
-    
             
                     <div hx-swap-oob='true' id='name_message'></div>
                 <div hx-swap-oob='true' id='description_message'></div>
@@ -126,7 +122,7 @@ class ProductController extends Controller
                     <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
                     <div class='m-2'>
                     
-                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'>Edit</button>
+                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'> View & Edit</button>
         
                     <button hx-delete='api/delete/".$prod->id."' hx-trigger='click' hx-confirm='Are you sure to delete ".$prod->name."?' hx-target='#products-list' hx-swap='innerHTML' class='bg-red-500 text-white font-bold py-2 px-4 rounded'>
                     Delete Item
@@ -312,7 +308,7 @@ public function error(){
                     <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
                     <div class='m-2'>
                     
-                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'>Edit</button>
+                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'> View & Edit</button>
         
                     <button hx-delete='api/delete/".$prod->id."' hx-trigger='click' hx-confirm='Are you sure to delete ".$prod->name."?' hx-target='#products-list' hx-swap='innerHTML' class='bg-red-500 text-white font-bold py-2 px-4 rounded'>
                     Delete Item
@@ -373,7 +369,7 @@ public function error(){
                 <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
                 <div class='m-2'>
                 
-                <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'>Edit</button>
+                <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'> View & Edit</button>
         
                 <button hx-delete='api/delete/".$prod->id."' hx-trigger='click' hx-confirm='Are you sure to delete ".$prod->name."?' hx-target='#products-list' hx-swap='innerHTML' class='bg-red-500 text-white font-bold py-2 px-4 rounded'>
                 Delete Item
@@ -416,7 +412,7 @@ public function error(){
                     <p class='text-green-500 font-semibold'>Quantity: {$prod->quantity}</p>
                     <div class='m-2'>
                     
-                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'>Edit</button>
+                    <button class='btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300' type='button' class='btn btn-success' hx-indicator='#loader' hx-get='/update_view/".$prod->id."' hx-target='#product'> View & Edit</button>
         
                     <button hx-delete='api/delete/".$prod->id."' hx-trigger='click' hx-confirm='Are you sure to delete ".$prod->name."?' hx-target='#products-list' hx-swap='innerHTML' class='bg-red-500 text-white font-bold py-2 px-4 rounded'>
                     Delete Item
